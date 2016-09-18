@@ -31,24 +31,24 @@ public class PokerGameRun {
 		player1.getCardInHand().add(card14);
 		player1.getCardInHand().add(card15);
 		
-		// Create player 1
+		// Create player 2
 		Player player2 = new Player();
 		
-		// Create 5 poker cards for player 1
+		// Create 5 poker cards for player 2
 		Card card21 = new Card(Suit.SPADES, Value.ACE);
 		Card card22 = new Card(Suit.CLUBS, Value.ACE);
 		Card card23 = new Card(Suit.CLUBS, Value.FIVE);
 		Card card24 = new Card(Suit.DIAMONDS, Value.JACK);
 		Card card25 = new Card(Suit.DIAMONDS, Value.TEN);
 		
-		// Add 5 cards to player cardList
+		// Add 5 cards to player 2 cardList
 		player2.getCardInHand().add(card21);
 		player2.getCardInHand().add(card22);
 		player2.getCardInHand().add(card23);
 		player2.getCardInHand().add(card24);
 		player2.getCardInHand().add(card25);
 		
-		
+		// Decide Who is winner
 		PokerHandRank.checkPlayerHand(player1, player2);
 		
 	}
