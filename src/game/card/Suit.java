@@ -1,3 +1,5 @@
+package game.card;
+
 /**
  * Enum class for Suit of card
  */

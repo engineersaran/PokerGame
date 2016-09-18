@@ -1,3 +1,5 @@
+package game.card;
+
 /**
  *Enum class for Value of card
  */

@@ -1,3 +1,5 @@
+package game.card;
+
 /**
  * Class represents Card which contains Suit and Value
  */
