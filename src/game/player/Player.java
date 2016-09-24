@@ -15,6 +15,9 @@ public class Player {
 	
 	/** Rank of player */
 	private int rank = 0;
+	
+	/** display poker hand */
+	private String displayHand = "";
 
 	/**
 	 * Getter method for providing card list in player hand
@@ -54,6 +57,23 @@ public class Player {
 	public void setRank(int rank) {
 		
 		this.rank = rank;
+	}
+
+	/**
+	 * Getter method for player's display hand
+	 * @return the displayHand
+	 */
+	public String getDisplayHand() {
+		return displayHand;
+	}
+
+	/**
+	 * Setter method for player's display hand
+	 * 
+	 * @param displayHand the displayHand to set
+	 */
+	public void setDisplayHand(String displayHand) {
+		this.displayHand = displayHand;
 	}
 
 }
