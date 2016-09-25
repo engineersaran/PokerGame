@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PokerHandEvaluator.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JunitTestSuite (25 Sep, 2016 5:36:27 PM)</a> &gt; <a href="../../index.html" class="el_group">PokerGame</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">game.poker</a> &gt; <span class="el_source">PokerHandEvaluator.java</span></div><h1>PokerHandEvaluator.java</h1><pre class="source lang-java linenums">package game.poker;
+
+import game.card.Card;
+import game.card.CardComparator;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Class represents Poker hand evaluator
+ *
+ */
+<span class="nc" id="L12">public class PokerHandEvaluator {</span>
+	
+	
+	/**
+	 * Method to check poker hand is Flush or not
+	 * 
+	 * @param cardList Card list of player
+	 * @return true/false
+	 */
+	public static boolean isFlush(List&lt;Card&gt; cardList) {
+
+		// 5 cards of the same suit
+<span class="fc bfc" id="L24" title="All 2 branches covered.">		if (cardList.get(PokerConstants.ZERO).getSuit().getSuitValue() == cardList.get(PokerConstants.ONE).getSuit().getSuitValue()</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">				&amp;&amp; cardList.get(PokerConstants.ONE).getSuit().getSuitValue() == cardList.get(PokerConstants.TWO).getSuit().getSuitValue()</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">				&amp;&amp; cardList.get(PokerConstants.TWO).getSuit().getSuitValue() == cardList.get(PokerConstants.THREE).getSuit().getSuitValue()</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">				&amp;&amp; cardList.get(PokerConstants.THREE).getSuit().getSuitValue() == cardList.get(PokerConstants.FOUR).getSuit().getSuitValue()) {</span>
+
+			// Poker hand is Flush
+<span class="fc" id="L30">			return true;</span>
+		}
+
+		// Poker hand is not Flush
+<span class="fc" id="L34">		return false;</span>
+	}
+
+	
+	/**
+	 * Method to check poker hand is Straight or not
+	 * 
+	 * @param cardList Card list of player
+	 * @return true/false
+	 */
+	public static boolean isStraight(List&lt;Card&gt; cardList) {
+
+		/** result flag */
+<span class="fc" id="L47">		boolean result = false;</span>
+
+		// Sorting the card list in ascending order
+<span class="fc" id="L50">		Collections.sort(cardList, new CardComparator());</span>
+
+		// Check card list contains ACE
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (cardList.get(PokerConstants.FOUR).getValue().getSuitValue() == PokerConstants.FOURTEEN) {</span>
+
+<span class="fc bfc" id="L55" title="All 4 branches covered.">				if ((cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == PokerConstants.TWO &amp;&amp; cardList.get(PokerConstants.ONE).getValue().getSuitValue() == PokerConstants.THREE</span>
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">						&amp;&amp; cardList.get(PokerConstants.TWO).getValue().getSuitValue() == PokerConstants.FOUR &amp;&amp; cardList.get(PokerConstants.THREE).getValue().getSuitValue() == PokerConstants.FIVE)</span>
+<span class="pc bpc" id="L57" title="1 of 4 branches missed.">						|| (cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == PokerConstants.TEN &amp;&amp; cardList.get(PokerConstants.ONE).getValue().getSuitValue() == PokerConstants.ELEVEN</span>
+<span class="pc bpc" id="L58" title="1 of 4 branches missed.">								&amp;&amp; cardList.get(PokerConstants.TWO).getValue().getSuitValue() == PokerConstants.TWELVE &amp;&amp; cardList.get(PokerConstants.THREE).getValue().getSuitValue() == PokerConstants.THIRTEEN)) {</span>
+	
+					// Poker hand is Straight
+<span class="fc" id="L61">					result = true;</span>
+	
+				}
+<span class="fc" id="L64">		}</span>
+		else {	// Check 5 cards with consecutive values present or not
+
+<span class="fc" id="L67">			int suitValue = cardList.get(PokerConstants.ZERO).getValue().getSuitValue() + PokerConstants.ONE;</span>
+
+<span class="fc bfc" id="L69" title="All 2 branches covered.">			for (int i = 1; i &lt; 5; i++) {</span>
+
+<span class="fc bfc" id="L71" title="All 2 branches covered.">				if (cardList.get(i).getValue().getSuitValue() != suitValue) {</span>
+
+<span class="fc" id="L73">					return result;		// Poker hand is not Straight</span>
+				}
+
+<span class="fc" id="L76">				suitValue++;</span>
+			}
+			
+			// Poker hand is Straight
+<span class="fc" id="L80">			result = true;</span>
+		}
+
+		// Return the result
+<span class="fc" id="L84">		return result;</span>
+	}
+
+	/**
+	 * Method to check poker hand is Full House or not
+	 * 
+	 * @param cardList Card list of player
+	 * @return true/false
+	 */
+	public static boolean isFullHouse(List&lt;Card&gt; cardList) {
+		
+		// Sort the card list in ascending order
+<span class="fc" id="L96">		Collections.sort(cardList, new CardComparator());</span>
+
+		// Check pattern of  [A, A, A, B, B] or [B, B, A, A, A]
+		// 3 cards of the same value, with the remaining 2 cards forming a pair.
+<span class="fc bfc" id="L100" title="All 2 branches covered.">		if ((cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">				&amp;&amp; cardList.get(PokerConstants.TWO).getValue().getSuitValue() == cardList.get(PokerConstants.THREE).getValue().getSuitValue() </span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">				&amp;&amp; cardList.get(PokerConstants.THREE).getValue().getSuitValue() == cardList.get(PokerConstants.FOUR).getValue().getSuitValue())</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">				|| (cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">						&amp;&amp; cardList.get(PokerConstants.ONE).getValue().getSuitValue() == cardList.get(PokerConstants.TWO).getValue().getSuitValue() </span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">						&amp;&amp; cardList.get(PokerConstants.THREE).getValue().getSuitValue() == cardList.get(PokerConstants.FOUR).getValue().getSuitValue())) {</span>
+
+			// Poker hand is full house
+<span class="fc" id="L108">			return true;</span>
+		}
+		
+		// Poker hand is not full house
+<span class="fc" id="L112">		return false;</span>
+	}
+
+	/**
+	 * Method to check poker hand is Four of a kind or not
+	 * 
+	 * @param cardList Card list of player
+	 * @return true/false
+	 */
+	public static boolean isFourOfaKind(List&lt;Card&gt; cardList) {
+
+		// Sort the card list in ascending order
+<span class="fc" id="L124">		Collections.sort(cardList, new CardComparator());</span>
+
+		// 4 cards with the same value.
+<span class="fc bfc" id="L127" title="All 2 branches covered.">		if ((cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">				&amp;&amp; cardList.get(PokerConstants.ONE).getValue().getSuitValue() == cardList.get(PokerConstants.TWO).getValue().getSuitValue() </span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">				&amp;&amp; cardList.get(PokerConstants.TWO).getValue().getSuitValue() == cardList.get(PokerConstants.THREE).getValue().getSuitValue())</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">				|| (cardList.get(PokerConstants.ONE).getValue().getSuitValue() == cardList.get(PokerConstants.TWO).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">						&amp;&amp; cardList.get(PokerConstants.TWO).getValue().getSuitValue() == cardList.get(PokerConstants.THREE).getValue().getSuitValue() </span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">						&amp;&amp; cardList.get(PokerConstants.THREE).getValue().getSuitValue() == cardList.get(PokerConstants.FOUR).getValue().getSuitValue())) {</span>
+
+			// Poker hand is four of a kind
+<span class="fc" id="L135">			return true;</span>
+		}
+
+		// Poker hand is not four of a kind
+<span class="fc" id="L139">		return false;</span>
+	}
+
+	
+	/**
+	 * Method to check poker hand is Three of a kind or not
+	 * 
+	 * @param cardList Card list of player
+	 * @return true/false
+	 */
+	public static boolean isThreeOfaKind(List&lt;Card&gt; cardList) {
+
+		// Check card is not Full house or Four of a kind
+<span class="fc bfc" id="L152" title="All 4 branches covered.">		if (!(isFullHouse(cardList) || isFourOfaKind(cardList))) {</span>
+
+			// Sort the card list in ascending order
+<span class="fc" id="L155">			Collections.sort(cardList, new CardComparator());</span>
+
+			// Three of the cards in the hand have the same value
+<span class="fc bfc" id="L158" title="All 2 branches covered.">			if ((cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">					&amp;&amp; cardList.get(PokerConstants.ONE).getValue().getSuitValue() == cardList.get(PokerConstants.TWO).getValue().getSuitValue())</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">					|| (cardList.get(PokerConstants.ONE).getValue().getSuitValue() == cardList.get(PokerConstants.TWO).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">							&amp;&amp; cardList.get(PokerConstants.TWO).getValue().getSuitValue() == cardList.get(PokerConstants.THREE).getValue().getSuitValue())</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">					|| (cardList.get(PokerConstants.TWO).getValue().getSuitValue() == cardList.get(PokerConstants.THREE).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">							&amp;&amp; cardList.get(PokerConstants.THREE).getValue().getSuitValue() == cardList.get(PokerConstants.FOUR).getValue().getSuitValue())) {</span>
+
+				// Poker hand is three of a kind
+<span class="fc" id="L166">				return true;</span>
+			}
+		}
+		
+		// Poker hand is not three of a kind 
+<span class="fc" id="L171">		return false;</span>
+	}
+	
+	
+	
+	/**
+	 * Method to check poker hand is having 2 pairs
+	 * 
+	 * @param cardList Card list of player
+	 * @return true/false
+	 */
+	public static boolean isTwoPairs(List&lt;Card&gt; cardList) {
+		
+		// Check poker hand is not Full house, four of a kind, three of a kind
+<span class="fc bfc" id="L185" title="All 6 branches covered.">		if(!(isFullHouse(cardList) || isFourOfaKind(cardList) || isThreeOfaKind(cardList))) {</span>
+			
+			// Sort the card list in ascending order 
+<span class="fc" id="L188">			Collections.sort(cardList, new CardComparator());</span>
+			
+			// The hand contains 2 different pairs
+<span class="fc bfc" id="L191" title="All 2 branches covered.">			if ((cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">					&amp;&amp; cardList.get(PokerConstants.TWO).getValue().getSuitValue() == cardList.get(PokerConstants.THREE).getValue().getSuitValue())</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">					|| (cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">							&amp;&amp; cardList.get(PokerConstants.THREE).getValue().getSuitValue() == cardList.get(PokerConstants.FOUR).getValue().getSuitValue())</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">					|| (cardList.get(PokerConstants.ONE).getValue().getSuitValue() == cardList.get(PokerConstants.TWO).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">							&amp;&amp; cardList.get(PokerConstants.THREE).getValue().getSuitValue() == cardList.get(PokerConstants.FOUR).getValue().getSuitValue())) {</span>
+				
+				// Poker hand is having 2 pairs
+<span class="fc" id="L199">				return true;</span>
+			}
+			
+		}
+		
+		// Poker hand is not having 2 pairs
+<span class="fc" id="L205">		return false;</span>
+	}
+	
+
+	/**
+	 * Method to check poker hand is having a pair or not
+	 * 
+	 * @param cardList Card list of player
+	 * @return true/false
+	 */
+	public static boolean isPair(List&lt;Card&gt; cardList) {
+		
+		// Check poker hand is not full house, four of a kind, three of a kind, 2 pairs
+<span class="fc bfc" id="L218" title="All 8 branches covered.">		if(!(isFullHouse(cardList) || isFourOfaKind(cardList) || isThreeOfaKind(cardList) || isTwoPairs(cardList) )) {</span>
+			
+			// Sort the card list in ascending order
+<span class="fc" id="L221">			Collections.sort(cardList, new CardComparator());</span>
+			
+			//  2 of the 5 cards in the hand have the same value.
+<span class="fc bfc" id="L224" title="All 2 branches covered.">			if (cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L225" title="All 2 branches covered.">					|| cardList.get(PokerConstants.ONE).getValue().getSuitValue() == cardList.get(PokerConstants.TWO).getValue().getSuitValue()</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">					|| cardList.get(PokerConstants.TWO).getValue().getSuitValue() == cardList.get(PokerConstants.THREE).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">					|| cardList.get(PokerConstants.THREE).getValue().getSuitValue() == cardList.get(PokerConstants.FOUR).getValue().getSuitValue()) {</span>
+
+				// Poker hand is having a pair
+<span class="fc" id="L230">				return true;</span>
+			}
+			
+		}
+		
+		// Poker hand is not having a pair
+<span class="fc" id="L236">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>JunitTestSuite (25 Sep, 2016 5:36:27 PM)</div></body></html>

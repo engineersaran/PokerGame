@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PokerHandRankTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JunitTestSuite (25 Sep, 2016 5:36:27 PM)</a> &gt; <a href="../../index.html" class="el_group">PokerGame</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">game.test</a> &gt; <span class="el_source">PokerHandRankTest.java</span></div><h1>PokerHandRankTest.java</h1><pre class="source lang-java linenums">package game.test;
+
+import static org.junit.Assert.*;
+import game.card.Card;
+import game.card.Suit;
+import game.card.Value;
+import game.player.Player;
+import game.poker.PokerHandRank;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+import static org.hamcrest.Matchers.equalTo;
+
+<span class="fc" id="L16">public class PokerHandRankTest {</span>
+
+	@Test
+	public void testGetHighCardRank() {
+		
+<span class="fc" id="L21">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L22">		cardList.add(new Card(Suit.HEARTS, Value.TWO));</span>
+<span class="fc" id="L23">		cardList.add(new Card(Suit.SPADES, Value.FOUR));</span>
+<span class="fc" id="L24">		cardList.add(new Card(Suit.DIAMONDS, Value.SEVEN));</span>
+<span class="fc" id="L25">		cardList.add(new Card(Suit.CLUBS, Value.NINE));</span>
+<span class="fc" id="L26">		cardList.add(new Card(Suit.SPADES, Value.EIGHT));</span>
+		
+<span class="fc" id="L28">		int rank = PokerHandRank.getHighCardRank(cardList);</span>
+<span class="fc" id="L29">		assertThat(rank, equalTo(369126));</span>
+<span class="fc" id="L30">	}</span>
+	
+	@Test
+	public void testGetStraightFlushRank() {
+		
+<span class="fc" id="L35">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L36">		cardList.add(new Card(Suit.HEARTS, Value.TWO));</span>
+<span class="fc" id="L37">		cardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L38">		cardList.add(new Card(Suit.HEARTS, Value.FOUR));</span>
+<span class="fc" id="L39">		cardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+<span class="fc" id="L40">		cardList.add(new Card(Suit.HEARTS, Value.SIX));</span>
+		
+<span class="fc" id="L42">		int rank = PokerHandRank.getStraightFlushRank(cardList);</span>
+<span class="fc" id="L43">		assertThat(rank, equalTo(8245044));</span>
+<span class="fc" id="L44">	}</span>
+
+	@Test
+	public void testGetFourOfAKindRank() {
+		
+<span class="fc" id="L49">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L50">		cardList.add(new Card(Suit.HEARTS, Value.TWO));</span>
+<span class="fc" id="L51">		cardList.add(new Card(Suit.CLUBS, Value.TWO));</span>
+<span class="fc" id="L52">		cardList.add(new Card(Suit.DIAMONDS, Value.TWO));</span>
+<span class="fc" id="L53">		cardList.add(new Card(Suit.SPADES, Value.TWO));</span>
+<span class="fc" id="L54">		cardList.add(new Card(Suit.HEARTS, Value.SIX));</span>
+		
+<span class="fc" id="L56">		int rank = PokerHandRank.getFourOfAKindRank(cardList);</span>
+<span class="fc" id="L57">		assertThat(rank, equalTo(7000002));</span>
+<span class="fc" id="L58">	}</span>
+	
+	@Test
+	public void testGetFullHouseRank() {
+		
+<span class="fc" id="L63">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L64">		cardList.add(new Card(Suit.HEARTS, Value.TWO));</span>
+<span class="fc" id="L65">		cardList.add(new Card(Suit.CLUBS, Value.TWO));</span>
+<span class="fc" id="L66">		cardList.add(new Card(Suit.DIAMONDS, Value.TWO));</span>
+<span class="fc" id="L67">		cardList.add(new Card(Suit.SPADES, Value.SIX));</span>
+<span class="fc" id="L68">		cardList.add(new Card(Suit.HEARTS, Value.SIX));</span>
+		
+<span class="fc" id="L70">		int rank = PokerHandRank.getFullHouseRank(cardList);</span>
+<span class="fc" id="L71">		assertThat(rank, equalTo(6000002));</span>
+<span class="fc" id="L72">	}</span>
+	
+	@Test
+	public void testGetFlushRank() {
+		
+<span class="fc" id="L77">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L78">		cardList.add(new Card(Suit.CLUBS, Value.TWO));</span>
+<span class="fc" id="L79">		cardList.add(new Card(Suit.CLUBS, Value.EIGHT));</span>
+<span class="fc" id="L80">		cardList.add(new Card(Suit.CLUBS, Value.FIVE));</span>
+<span class="fc" id="L81">		cardList.add(new Card(Suit.CLUBS, Value.JACK));</span>
+<span class="fc" id="L82">		cardList.add(new Card(Suit.CLUBS, Value.NINE));</span>
+		
+<span class="fc" id="L84">		int rank = PokerHandRank.getFlushRank(cardList);</span>
+<span class="fc" id="L85">		assertThat(rank, equalTo(5448912));</span>
+<span class="fc" id="L86">	}</span>
+	
+	@Test
+	public void testGetStraightRank() {
+		
+<span class="fc" id="L91">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L92">		cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+<span class="fc" id="L93">		cardList.add(new Card(Suit.HEARTS, Value.SIX));</span>
+<span class="fc" id="L94">		cardList.add(new Card(Suit.SPADES, Value.FIVE));</span>
+<span class="fc" id="L95">		cardList.add(new Card(Suit.DIAMONDS, Value.FOUR));</span>
+<span class="fc" id="L96">		cardList.add(new Card(Suit.CLUBS, Value.SEVEN));</span>
+		
+<span class="fc" id="L98">		int rank = PokerHandRank.getStraightRank(cardList);</span>
+<span class="fc" id="L99">		assertThat(rank, equalTo(4286415));</span>
+<span class="fc" id="L100">	}</span>
+	
+	@Test
+	public void testGetThreeOfAKindRank() {
+		
+<span class="fc" id="L105">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L106">		cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+<span class="fc" id="L107">		cardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L108">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L109">		cardList.add(new Card(Suit.DIAMONDS, Value.FOUR));</span>
+<span class="fc" id="L110">		cardList.add(new Card(Suit.CLUBS, Value.SEVEN));</span>
+		
+<span class="fc" id="L112">		int rank = PokerHandRank.getThreeOfAKindRank(cardList);</span>
+<span class="fc" id="L113">		assertThat(rank, equalTo(3000003));</span>
+<span class="fc" id="L114">	}</span>
+	
+	@Test
+	public void testGetTwoPairsRank_01() {
+		
+<span class="fc" id="L119">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L120">		cardList.add(new Card(Suit.CLUBS, Value.TWO));</span>
+<span class="fc" id="L121">		cardList.add(new Card(Suit.HEARTS, Value.TWO));</span>
+<span class="fc" id="L122">		cardList.add(new Card(Suit.SPADES, Value.FOUR));</span>
+<span class="fc" id="L123">		cardList.add(new Card(Suit.DIAMONDS, Value.FOUR));</span>
+<span class="fc" id="L124">		cardList.add(new Card(Suit.CLUBS, Value.SEVEN));</span>
+		
+<span class="fc" id="L126">		int rank = PokerHandRank.getTwoPairsRank(cardList);</span>
+<span class="fc" id="L127">		assertThat(rank, equalTo(2000819));</span>
+<span class="fc" id="L128">	}</span>
+	
+	@Test
+	public void testGetTwoPairsRank_02() {
+		
+<span class="fc" id="L133">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L134">		cardList.add(new Card(Suit.CLUBS, Value.TWO));</span>
+<span class="fc" id="L135">		cardList.add(new Card(Suit.HEARTS, Value.TWO));</span>
+<span class="fc" id="L136">		cardList.add(new Card(Suit.SPADES, Value.FOUR));</span>
+<span class="fc" id="L137">		cardList.add(new Card(Suit.DIAMONDS, Value.FOUR));</span>
+<span class="fc" id="L138">		cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+		
+<span class="fc" id="L140">		int rank = PokerHandRank.getTwoPairsRank(cardList);</span>
+<span class="fc" id="L141">		assertThat(rank, equalTo(2000815));</span>
+<span class="fc" id="L142">	}</span>
+	
+	@Test
+	public void testGetTwoPairsRank_03() {
+		
+<span class="fc" id="L147">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L148">		cardList.add(new Card(Suit.CLUBS, Value.SIX));</span>
+<span class="fc" id="L149">		cardList.add(new Card(Suit.HEARTS, Value.EIGHT));</span>
+<span class="fc" id="L150">		cardList.add(new Card(Suit.SPADES, Value.SIX));</span>
+<span class="fc" id="L151">		cardList.add(new Card(Suit.DIAMONDS, Value.EIGHT));</span>
+<span class="fc" id="L152">		cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+		
+<span class="fc" id="L154">		int rank = PokerHandRank.getTwoPairsRank(cardList);</span>
+<span class="fc" id="L155">		assertThat(rank, equalTo(2001655));</span>
+<span class="fc" id="L156">	}</span>
+	
+	@Test
+	public void testGetPairRank_01() {
+		
+<span class="fc" id="L161">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L162">		cardList.add(new Card(Suit.CLUBS, Value.TWO));</span>
+<span class="fc" id="L163">		cardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+<span class="fc" id="L164">		cardList.add(new Card(Suit.SPADES, Value.FOUR));</span>
+<span class="fc" id="L165">		cardList.add(new Card(Suit.DIAMONDS, Value.TWO));</span>
+<span class="fc" id="L166">		cardList.add(new Card(Suit.CLUBS, Value.TEN));</span>
+		
+<span class="fc" id="L168">		int rank = PokerHandRank.getPairRank(cardList);</span>
+<span class="fc" id="L169">		assertThat(rank, equalTo(1007522));</span>
+<span class="fc" id="L170">	}</span>
+	
+	@Test
+	public void testGetPairRank_02() {
+		
+<span class="fc" id="L175">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L176">		cardList.add(new Card(Suit.CLUBS, Value.TWO));</span>
+<span class="fc" id="L177">		cardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+<span class="fc" id="L178">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L179">		cardList.add(new Card(Suit.DIAMONDS, Value.SIX));</span>
+<span class="fc" id="L180">		cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+		
+<span class="fc" id="L182">		int rank = PokerHandRank.getPairRank(cardList);</span>
+<span class="fc" id="L183">		assertThat(rank, equalTo(1009480));</span>
+<span class="fc" id="L184">	}</span>
+	
+	@Test
+	public void testGetPairRank_03() {
+		
+<span class="fc" id="L189">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L190">		cardList.add(new Card(Suit.CLUBS, Value.TWO));</span>
+<span class="fc" id="L191">		cardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+<span class="fc" id="L192">		cardList.add(new Card(Suit.SPADES, Value.SIX));</span>
+<span class="fc" id="L193">		cardList.add(new Card(Suit.DIAMONDS, Value.FIVE));</span>
+<span class="fc" id="L194">		cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+		
+<span class="fc" id="L196">		int rank = PokerHandRank.getPairRank(cardList);</span>
+<span class="fc" id="L197">		assertThat(rank, equalTo(1014940));</span>
+<span class="fc" id="L198">	}</span>
+	
+	@Test
+	public void testGetPairRank_04() {
+		
+<span class="fc" id="L203">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L204">		cardList.add(new Card(Suit.CLUBS, Value.SIX));</span>
+<span class="fc" id="L205">		cardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+<span class="fc" id="L206">		cardList.add(new Card(Suit.SPADES, Value.SIX));</span>
+<span class="fc" id="L207">		cardList.add(new Card(Suit.DIAMONDS, Value.TWO));</span>
+<span class="fc" id="L208">		cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+		
+<span class="fc" id="L210">		int rank = PokerHandRank.getPairRank(cardList);</span>
+<span class="fc" id="L211">		assertThat(rank, equalTo(1017488));</span>
+<span class="fc" id="L212">	}</span>
+	
+	@Test
+	public void testCheckPlayerHand_01() {
+		
+<span class="fc" id="L217">		Player player1 = new Player();</span>
+<span class="fc" id="L218">		Player player2 = new Player();</span>
+		
+<span class="fc" id="L220">		List&lt;Card&gt; p1CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L221">		p1CardList.add(new Card(Suit.HEARTS, Value.TWO));</span>
+<span class="fc" id="L222">		p1CardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L223">		p1CardList.add(new Card(Suit.HEARTS, Value.FOUR));</span>
+<span class="fc" id="L224">		p1CardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+<span class="fc" id="L225">		p1CardList.add(new Card(Suit.HEARTS, Value.SIX));</span>
+		
+<span class="fc" id="L227">		player1.setCardInHand(p1CardList);</span>
+		
+<span class="fc" id="L229">		List&lt;Card&gt; p2CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L230">		p2CardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+<span class="fc" id="L231">		p2CardList.add(new Card(Suit.CLUBS, Value.FOUR));</span>
+<span class="fc" id="L232">		p2CardList.add(new Card(Suit.CLUBS, Value.FIVE));</span>
+<span class="fc" id="L233">		p2CardList.add(new Card(Suit.CLUBS, Value.SIX));</span>
+<span class="fc" id="L234">		p2CardList.add(new Card(Suit.CLUBS, Value.SEVEN));</span>
+		
+<span class="fc" id="L236">		player2.setCardInHand(p2CardList);</span>
+		
+<span class="fc" id="L238">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">		assertThat(player2.getRank()&gt;player1.getRank(), equalTo(true));</span>
+<span class="fc" id="L241">		assertThat(player2.getDisplayHand(), equalTo(&quot;Straight flush&quot;));</span>
+<span class="fc" id="L242">		assertThat(player1.getDisplayHand(), equalTo(&quot;Straight flush&quot;));</span>
+<span class="fc" id="L243">	}</span>
+	
+	@Test
+	public void testCheckPlayerHand_02() {
+		
+<span class="fc" id="L248">		Player player1 = new Player();</span>
+		
+<span class="fc" id="L250">		Player player2 = new Player();</span>
+		
+<span class="fc" id="L252">		List&lt;Card&gt; p1CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L253">		p1CardList.add(new Card(Suit.HEARTS, Value.SEVEN));</span>
+<span class="fc" id="L254">		p1CardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L255">		p1CardList.add(new Card(Suit.HEARTS, Value.FOUR));</span>
+<span class="fc" id="L256">		p1CardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+<span class="fc" id="L257">		p1CardList.add(new Card(Suit.HEARTS, Value.SIX));</span>
+		
+<span class="fc" id="L259">		player1.setCardInHand(p1CardList);</span>
+		
+<span class="fc" id="L261">		List&lt;Card&gt; p2CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L262">		p2CardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+<span class="fc" id="L263">		p2CardList.add(new Card(Suit.CLUBS, Value.FOUR));</span>
+<span class="fc" id="L264">		p2CardList.add(new Card(Suit.CLUBS, Value.FIVE));</span>
+<span class="fc" id="L265">		p2CardList.add(new Card(Suit.CLUBS, Value.SIX));</span>
+<span class="fc" id="L266">		p2CardList.add(new Card(Suit.CLUBS, Value.SEVEN));</span>
+		
+<span class="fc" id="L268">		player2.setCardInHand(p2CardList);</span>
+		
+<span class="fc" id="L270">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">		assertThat(player2.getRank()==player1.getRank(), equalTo(true));</span>
+<span class="fc" id="L273">		assertThat(player2.getDisplayHand(), equalTo(&quot;Straight flush&quot;));</span>
+<span class="fc" id="L274">		assertThat(player1.getDisplayHand(), equalTo(&quot;Straight flush&quot;));</span>
+<span class="fc" id="L275">	}</span>
+	
+	@Test
+	public void testCheckPlayerHand_03() {
+		
+<span class="fc" id="L280">		Player player1 = new Player();</span>
+		
+<span class="fc" id="L282">		Player player2 = new Player();</span>
+		
+<span class="fc" id="L284">		List&lt;Card&gt; p1CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L285">		p1CardList.add(new Card(Suit.HEARTS, Value.SEVEN));</span>
+<span class="fc" id="L286">		p1CardList.add(new Card(Suit.DIAMONDS, Value.SEVEN));</span>
+<span class="fc" id="L287">		p1CardList.add(new Card(Suit.CLUBS, Value.SEVEN));</span>
+<span class="fc" id="L288">		p1CardList.add(new Card(Suit.SPADES, Value.SEVEN));</span>
+<span class="fc" id="L289">		p1CardList.add(new Card(Suit.DIAMONDS, Value.SIX));</span>
+		
+<span class="fc" id="L291">		player1.setCardInHand(p1CardList);</span>
+		
+<span class="fc" id="L293">		List&lt;Card&gt; p2CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L294">		p2CardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+<span class="fc" id="L295">		p2CardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L296">		p2CardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+<span class="fc" id="L297">		p2CardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L298">		p2CardList.add(new Card(Suit.HEARTS, Value.TEN));</span>
+		
+<span class="fc" id="L300">		player2.setCardInHand(p2CardList);</span>
+		
+<span class="fc" id="L302">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">		assertThat(player2.getRank() &gt; player1.getRank(), equalTo(true));</span>
+<span class="fc" id="L305">		assertThat(player2.getDisplayHand(), equalTo(&quot;Four of a kind&quot;));</span>
+<span class="fc" id="L306">		assertThat(player1.getDisplayHand(), equalTo(&quot;Four of a kind&quot;));</span>
+<span class="fc" id="L307">	}</span>
+	
+	@Test
+	public void testCheckPlayerHand_04() {
+		
+<span class="fc" id="L312">		Player player1 = new Player();</span>
+		
+<span class="fc" id="L314">		Player player2 = new Player();</span>
+		
+<span class="fc" id="L316">		List&lt;Card&gt; p1CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L317">		p1CardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L318">		p1CardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+<span class="fc" id="L319">		p1CardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L320">		p1CardList.add(new Card(Suit.SPADES, Value.SEVEN));</span>
+<span class="fc" id="L321">		p1CardList.add(new Card(Suit.DIAMONDS, Value.SEVEN));</span>
+		
+<span class="fc" id="L323">		player1.setCardInHand(p1CardList);</span>
+		
+<span class="fc" id="L325">		List&lt;Card&gt; p2CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L326">		p2CardList.add(new Card(Suit.DIAMONDS, Value.KING));</span>
+<span class="fc" id="L327">		p2CardList.add(new Card(Suit.CLUBS, Value.KING));</span>
+<span class="fc" id="L328">		p2CardList.add(new Card(Suit.SPADES, Value.KING));</span>
+<span class="fc" id="L329">		p2CardList.add(new Card(Suit.HEARTS, Value.QUEEN));</span>
+<span class="fc" id="L330">		p2CardList.add(new Card(Suit.HEARTS, Value.QUEEN));</span>
+		
+<span class="fc" id="L332">		player2.setCardInHand(p2CardList);</span>
+		
+<span class="fc" id="L334">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">		assertThat(player1.getRank() &gt; player2.getRank(), equalTo(true));</span>
+<span class="fc" id="L337">		assertThat(player2.getDisplayHand(), equalTo(&quot;Full House&quot;));</span>
+<span class="fc" id="L338">		assertThat(player1.getDisplayHand(), equalTo(&quot;Full House&quot;));</span>
+<span class="fc" id="L339">	}</span>
+	
+	@Test
+	public void testCheckPlayerHand_05() {
+		
+<span class="fc" id="L344">		Player player1 = new Player();</span>
+		
+<span class="fc" id="L346">		Player player2 = new Player();</span>
+		
+<span class="fc" id="L348">		List&lt;Card&gt; p1CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L349">		p1CardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L350">		p1CardList.add(new Card(Suit.HEARTS, Value.NINE));</span>
+<span class="fc" id="L351">		p1CardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L352">		p1CardList.add(new Card(Suit.HEARTS, Value.SIX));</span>
+<span class="fc" id="L353">		p1CardList.add(new Card(Suit.HEARTS, Value.FOUR));</span>
+		
+<span class="fc" id="L355">		player1.setCardInHand(p1CardList);</span>
+		
+<span class="fc" id="L357">		List&lt;Card&gt; p2CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L358">		p2CardList.add(new Card(Suit.DIAMONDS, Value.KING));</span>
+<span class="fc" id="L359">		p2CardList.add(new Card(Suit.DIAMONDS, Value.JACK));</span>
+<span class="fc" id="L360">		p2CardList.add(new Card(Suit.DIAMONDS, Value.TWO));</span>
+<span class="fc" id="L361">		p2CardList.add(new Card(Suit.DIAMONDS, Value.FIVE));</span>
+<span class="fc" id="L362">		p2CardList.add(new Card(Suit.DIAMONDS, Value.EIGHT));</span>
+		
+<span class="fc" id="L364">		player2.setCardInHand(p2CardList);</span>
+		
+<span class="fc" id="L366">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="pc bpc" id="L368" title="1 of 2 branches missed.">		assertThat(player1.getRank() &gt; player2.getRank(), equalTo(true));</span>
+<span class="fc" id="L369">		assertThat(player2.getDisplayHand(), equalTo(&quot;Flush&quot;));</span>
+<span class="fc" id="L370">		assertThat(player1.getDisplayHand(), equalTo(&quot;Flush&quot;));</span>
+<span class="fc" id="L371">	}</span>
+	
+	@Test
+	public void testCheckPlayerHand_06() {
+		
+<span class="fc" id="L376">		Player player1 = new Player();</span>
+		
+<span class="fc" id="L378">		Player player2 = new Player();</span>
+		
+<span class="fc" id="L380">		List&lt;Card&gt; p1CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L381">		p1CardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L382">		p1CardList.add(new Card(Suit.CLUBS, Value.TWO));</span>
+<span class="fc" id="L383">		p1CardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L384">		p1CardList.add(new Card(Suit.DIAMONDS, Value.FOUR));</span>
+<span class="fc" id="L385">		p1CardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+		
+<span class="fc" id="L387">		player1.setCardInHand(p1CardList);</span>
+		
+<span class="fc" id="L389">		List&lt;Card&gt; p2CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L390">		p2CardList.add(new Card(Suit.DIAMONDS, Value.KING));</span>
+<span class="fc" id="L391">		p2CardList.add(new Card(Suit.HEARTS, Value.JACK));</span>
+<span class="fc" id="L392">		p2CardList.add(new Card(Suit.SPADES, Value.TEN));</span>
+<span class="fc" id="L393">		p2CardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L394">		p2CardList.add(new Card(Suit.DIAMONDS, Value.QUEEN));</span>
+		
+<span class="fc" id="L396">		player2.setCardInHand(p2CardList);</span>
+		
+<span class="fc" id="L398">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="pc bpc" id="L400" title="1 of 2 branches missed.">		assertThat(player2.getRank() &gt; player1.getRank(), equalTo(true));</span>
+<span class="fc" id="L401">		assertThat(player2.getDisplayHand(), equalTo(&quot;Straight&quot;));</span>
+<span class="fc" id="L402">		assertThat(player1.getDisplayHand(), equalTo(&quot;Straight&quot;));</span>
+<span class="fc" id="L403">	}</span>
+	
+	@Test
+	public void testCheckPlayerHand_07() {
+		
+<span class="fc" id="L408">		Player player1 = new Player();</span>
+		
+<span class="fc" id="L410">		Player player2 = new Player();</span>
+		
+<span class="fc" id="L412">		List&lt;Card&gt; p1CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L413">		p1CardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L414">		p1CardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L415">		p1CardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+<span class="fc" id="L416">		p1CardList.add(new Card(Suit.DIAMONDS, Value.FOUR));</span>
+<span class="fc" id="L417">		p1CardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+		
+<span class="fc" id="L419">		player1.setCardInHand(p1CardList);</span>
+		
+<span class="fc" id="L421">		List&lt;Card&gt; p2CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L422">		p2CardList.add(new Card(Suit.DIAMONDS, Value.KING));</span>
+<span class="fc" id="L423">		p2CardList.add(new Card(Suit.HEARTS, Value.KING));</span>
+<span class="fc" id="L424">		p2CardList.add(new Card(Suit.SPADES, Value.KING));</span>
+<span class="fc" id="L425">		p2CardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L426">		p2CardList.add(new Card(Suit.DIAMONDS, Value.QUEEN));</span>
+		
+<span class="fc" id="L428">		player2.setCardInHand(p2CardList);</span>
+		
+<span class="fc" id="L430">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="pc bpc" id="L432" title="1 of 2 branches missed.">		assertThat(player2.getRank() &gt; player1.getRank(), equalTo(false));</span>
+<span class="fc" id="L433">		assertThat(player2.getDisplayHand(), equalTo(&quot;Three of a Kind&quot;));</span>
+<span class="fc" id="L434">		assertThat(player1.getDisplayHand(), equalTo(&quot;Three of a Kind&quot;));</span>
+<span class="fc" id="L435">	}</span>
+	
+	@Test
+	public void testCheckPlayerHand_08() {
+		
+<span class="fc" id="L440">		Player player1 = new Player();</span>
+		
+<span class="fc" id="L442">		Player player2 = new Player();</span>
+		
+<span class="fc" id="L444">		List&lt;Card&gt; p1CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L445">		p1CardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L446">		p1CardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L447">		p1CardList.add(new Card(Suit.SPADES, Value.KING));</span>
+<span class="fc" id="L448">		p1CardList.add(new Card(Suit.DIAMONDS, Value.KING));</span>
+<span class="fc" id="L449">		p1CardList.add(new Card(Suit.HEARTS, Value.QUEEN));</span>
+		
+<span class="fc" id="L451">		player1.setCardInHand(p1CardList);</span>
+		
+<span class="fc" id="L453">		List&lt;Card&gt; p2CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L454">		p2CardList.add(new Card(Suit.DIAMONDS, Value.QUEEN));</span>
+<span class="fc" id="L455">		p2CardList.add(new Card(Suit.HEARTS, Value.JACK));</span>
+<span class="fc" id="L456">		p2CardList.add(new Card(Suit.SPADES, Value.QUEEN));</span>
+<span class="fc" id="L457">		p2CardList.add(new Card(Suit.CLUBS, Value.JACK));</span>
+<span class="fc" id="L458">		p2CardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+		
+<span class="fc" id="L460">		player2.setCardInHand(p2CardList);</span>
+		
+<span class="fc" id="L462">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="pc bpc" id="L464" title="1 of 2 branches missed.">		assertThat(player2.getRank() &gt; player1.getRank(), equalTo(false));</span>
+<span class="fc" id="L465">		assertThat(player2.getDisplayHand(), equalTo(&quot;Two Pairs&quot;));</span>
+<span class="fc" id="L466">		assertThat(player1.getDisplayHand(), equalTo(&quot;Two Pairs&quot;));</span>
+<span class="fc" id="L467">	}</span>
+	
+	@Test
+	public void testCheckPlayerHand_09() {
+		
+<span class="fc" id="L472">		Player player1 = new Player();</span>
+		
+<span class="fc" id="L474">		Player player2 = new Player();</span>
+		
+<span class="fc" id="L476">		List&lt;Card&gt; p1CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L477">		p1CardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L478">		p1CardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L479">		p1CardList.add(new Card(Suit.SPADES, Value.KING));</span>
+<span class="fc" id="L480">		p1CardList.add(new Card(Suit.DIAMONDS, Value.TEN));</span>
+<span class="fc" id="L481">		p1CardList.add(new Card(Suit.HEARTS, Value.JACK));</span>
+		
+<span class="fc" id="L483">		player1.setCardInHand(p1CardList);</span>
+		
+<span class="fc" id="L485">		List&lt;Card&gt; p2CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L486">		p2CardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+<span class="fc" id="L487">		p2CardList.add(new Card(Suit.HEARTS, Value.QUEEN));</span>
+<span class="fc" id="L488">		p2CardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+<span class="fc" id="L489">		p2CardList.add(new Card(Suit.CLUBS, Value.TWO));</span>
+<span class="fc" id="L490">		p2CardList.add(new Card(Suit.DIAMONDS, Value.TEN));</span>
+		
+<span class="fc" id="L492">		player2.setCardInHand(p2CardList);</span>
+		
+<span class="fc" id="L494">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="pc bpc" id="L496" title="1 of 2 branches missed.">		assertThat(player2.getRank() &gt; player1.getRank(), equalTo(false));</span>
+<span class="fc" id="L497">		assertThat(player2.getDisplayHand(), equalTo(&quot;Pair&quot;));</span>
+<span class="fc" id="L498">		assertThat(player1.getDisplayHand(), equalTo(&quot;Pair&quot;));</span>
+<span class="fc" id="L499">	}</span>
+	
+	@Test
+	public void testCheckPlayerHand_10() {
+		
+<span class="fc" id="L504">		Player player1 = new Player();</span>
+		
+<span class="fc" id="L506">		Player player2 = new Player();</span>
+		
+<span class="fc" id="L508">		List&lt;Card&gt; p1CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L509">		p1CardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L510">		p1CardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+<span class="fc" id="L511">		p1CardList.add(new Card(Suit.SPADES, Value.JACK));</span>
+<span class="fc" id="L512">		p1CardList.add(new Card(Suit.DIAMONDS, Value.TEN));</span>
+<span class="fc" id="L513">		p1CardList.add(new Card(Suit.HEARTS, Value.FOUR));</span>
+		
+<span class="fc" id="L515">		player1.setCardInHand(p1CardList);</span>
+		
+<span class="fc" id="L517">		List&lt;Card&gt; p2CardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L518">		p2CardList.add(new Card(Suit.DIAMONDS, Value.THREE));</span>
+<span class="fc" id="L519">		p2CardList.add(new Card(Suit.HEARTS, Value.QUEEN));</span>
+<span class="fc" id="L520">		p2CardList.add(new Card(Suit.SPADES, Value.FOUR));</span>
+<span class="fc" id="L521">		p2CardList.add(new Card(Suit.CLUBS, Value.NINE));</span>
+<span class="fc" id="L522">		p2CardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+		
+<span class="fc" id="L524">		player2.setCardInHand(p2CardList);</span>
+		
+<span class="fc" id="L526">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="pc bpc" id="L528" title="1 of 2 branches missed.">		assertThat(player2.getRank() &gt; player1.getRank(), equalTo(true));</span>
+<span class="fc" id="L529">		assertThat(player2.getDisplayHand(), equalTo(&quot;High Card&quot;));</span>
+<span class="fc" id="L530">		assertThat(player1.getDisplayHand(), equalTo(&quot;High Card&quot;));</span>
+<span class="fc" id="L531">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>JunitTestSuite (25 Sep, 2016 5:36:27 PM)</div></body></html>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PokerGameRun.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JunitTestSuite (25 Sep, 2016 5:36:27 PM)</a> &gt; <a href="../../index.html" class="el_group">PokerGame</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">game</a> &gt; <span class="el_source">PokerGameRun.java</span></div><h1>PokerGameRun.java</h1><pre class="source lang-java linenums">package game;
+
+import game.card.Card;
+import game.card.Suit;
+import game.card.Value;
+import game.player.Player;
+import game.poker.PokerHandRank;
+
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+/**
+ *Main class which runs the Poker Game. 
+ *
+ */
+<span class="nc" id="L17">public class PokerGameRun {</span>
+	
+	/** Unique poker cards of player1 from user */
+<span class="nc" id="L20">	private Set&lt;String&gt; player1Cards = new HashSet&lt;String&gt;();</span>
+	
+	/** Unique poker cards of player2 from user */
+<span class="nc" id="L23">	private	Set&lt;String&gt; player2Cards = new HashSet&lt;String&gt;();</span>
+	
+	/** player 1 */
+<span class="nc" id="L26">	private Player player1 = null;</span>
+	
+	/** player 2 */
+<span class="nc" id="L29">	private Player player2 = null;</span>
+	
+	
+	/**
+	 * Method to display Poker Game introduction
+	 */
+	private void displayIntro(){
+		
+<span class="nc" id="L37">		System.out.println(&quot;*****************************************************************&quot;);</span>
+<span class="nc" id="L38">		System.out.println(&quot;\t\tWelcome to Poker Game&quot;);</span>
+<span class="nc" id="L39">		System.out.println(&quot;*****************************************************************&quot;);</span>
+		
+<span class="nc" id="L41">		System.out.println(&quot;Please find the information below for how to play poker game\n&quot;);</span>
+<span class="nc" id="L42">		System.out.println(&quot;Available Suits are:\n&quot;);</span>
+<span class="nc" id="L43">		System.out.println(&quot;Clubs: C&quot;);</span>
+<span class="nc" id="L44">		System.out.println(&quot;Diamond: D&quot;);</span>
+<span class="nc" id="L45">		System.out.println(&quot;Hearts: H&quot;);</span>
+<span class="nc" id="L46">		System.out.println(&quot;Spades: S&quot;);</span>
+		
+<span class="nc" id="L48">		System.out.println(&quot;\nAvailable Cards for each suits are:\n&quot;);</span>
+<span class="nc" id="L49">		System.out.println(&quot;2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A \n&quot;);</span>
+		
+<span class="nc" id="L51">		System.out.println(&quot;Input format, for example, 'Hearts of 2' means 2:H&quot;);</span>
+<span class="nc" id="L52">		System.out.println(&quot;Duplicates card values from suit is not allowed&quot;);</span>
+<span class="nc" id="L53">		System.out.println(&quot;*****************************************************************\n&quot;);</span>
+<span class="nc" id="L54">	}</span>
+	
+	/**
+	 * Input method for player 1 poker cards
+	 * 
+	 * @param scanner Scanner to read command line input
+	 */
+	private void getPlayer1(Scanner scanner) {
+		
+<span class="nc" id="L63">		System.out.println(&quot;Player 1:\n&quot;);</span>
+<span class="nc" id="L64">		System.out.println(&quot;Enter Poker card1&quot;);</span>
+<span class="nc" id="L65">		player1Cards.add(scanner.next());</span>
+<span class="nc" id="L66">		System.out.println(&quot;Enter Poker card2&quot;);</span>
+<span class="nc" id="L67">		player1Cards.add(scanner.next());</span>
+<span class="nc" id="L68">		System.out.println(&quot;Enter Poker card3&quot;);</span>
+<span class="nc" id="L69">		player1Cards.add(scanner.next());</span>
+<span class="nc" id="L70">		System.out.println(&quot;Enter Poker card4&quot;);</span>
+<span class="nc" id="L71">		player1Cards.add(scanner.next());</span>
+<span class="nc" id="L72">		System.out.println(&quot;Enter Poker card5&quot;);</span>
+<span class="nc" id="L73">		player1Cards.add(scanner.next());</span>
+		
+		// size is less than 5, then duplicate card values
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		if(5!=player1Cards.size()) {</span>
+			
+<span class="nc" id="L78">			System.out.println(&quot;Duplicates card values&quot;);</span>
+<span class="nc" id="L79">			player1Cards.removeAll(player1Cards);</span>
+<span class="nc" id="L80">			getPlayer1(scanner);</span>
+		}
+		
+<span class="nc" id="L83">	}</span>
+	
+	/**
+	 * Input method for player 2 poker cards
+	 * 
+	 * @param scanner Scanner to read command line input
+	 */
+	private  void getPlayer2(Scanner scanner) {
+		
+<span class="nc" id="L92">		System.out.println(&quot;\nPlayer 2:\n&quot;);</span>
+<span class="nc" id="L93">		System.out.println(&quot;Enter Poker card1&quot;);</span>
+<span class="nc" id="L94">		player2Cards.add(scanner.next());</span>
+<span class="nc" id="L95">		System.out.println(&quot;Enter Poker card2&quot;);</span>
+<span class="nc" id="L96">		player2Cards.add(scanner.next());</span>
+<span class="nc" id="L97">		System.out.println(&quot;Enter Poker card3&quot;);</span>
+<span class="nc" id="L98">		player2Cards.add(scanner.next());</span>
+<span class="nc" id="L99">		System.out.println(&quot;Enter Poker card4&quot;);</span>
+<span class="nc" id="L100">		player2Cards.add(scanner.next());</span>
+<span class="nc" id="L101">		System.out.println(&quot;Enter Poker card5&quot;);</span>
+<span class="nc" id="L102">		player2Cards.add(scanner.next());</span>
+		
+		// size is less than 5, then duplicate card values
+<span class="nc bnc" id="L105" title="All 2 branches missed.">		if(5!=player2Cards.size()) {</span>
+			
+<span class="nc" id="L107">			System.out.println(&quot;Duplicates card values&quot;);</span>
+<span class="nc" id="L108">			player1Cards.removeAll(player2Cards);</span>
+<span class="nc" id="L109">			getPlayer2(scanner);</span>
+		}
+		
+<span class="nc" id="L112">	}</span>
+	
+	private void createPlayer1() {
+		
+		// creating player 1
+<span class="nc" id="L117">		player1 = new Player();</span>
+		
+<span class="nc bnc" id="L119" title="All 2 branches missed.">		for (String str : player1Cards) {</span>
+			
+<span class="nc" id="L121">			String[] pokerCard = str.split(&quot;:&quot;);</span>
+			
+<span class="nc" id="L123">			player1.getCardInHand().add(new Card(getSuit(pokerCard[1]), getValue(pokerCard[0])));</span>
+		}
+		
+<span class="nc" id="L126">	}</span>
+	
+	private void createPlayer2() {
+		
+		// creating player 1
+<span class="nc" id="L131">		player2 = new Player();</span>
+		
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		for (String str : player2Cards) {</span>
+			
+<span class="nc" id="L135">			String[] pokerCard = str.split(&quot;:&quot;);</span>
+			
+<span class="nc" id="L137">			player2.getCardInHand().add(new Card(getSuit(pokerCard[1]), getValue(pokerCard[0])));</span>
+		}
+		
+<span class="nc" id="L140">	}</span>
+	
+	/**
+	 * Display the winner of Poker Game
+	 */
+	private void displayWinner() {
+		
+		// Decide Who is winner
+<span class="nc" id="L148">		PokerHandRank.checkPlayerHand(player1, player2);</span>
+		
+<span class="nc" id="L150">	}</span>
+	
+	/**
+	 * Getter method for Suit based on input value
+	 * 
+	 * @param suit input suit from user
+	 * @return suitValue Suit of Card
+	 */
+	public Suit getSuit(String suit) {
+		
+		// Suits
+<span class="nc" id="L161">		Suit suitValue = null;</span>
+		
+<span class="nc bnc" id="L163" title="All 13 branches missed.">		switch (suit) {</span>
+		
+		case &quot;H&quot;:
+<span class="nc" id="L166">			suitValue = Suit.HEARTS;</span>
+<span class="nc" id="L167">			break;</span>
+			
+		case &quot;C&quot;:
+<span class="nc" id="L170">			suitValue = Suit.CLUBS;</span>
+<span class="nc" id="L171">			break;</span>
+			
+		case &quot;S&quot;:
+<span class="nc" id="L174">			suitValue = Suit.SPADES;</span>
+<span class="nc" id="L175">			break;</span>
+			
+		case &quot;D&quot;:
+<span class="nc" id="L178">			suitValue = Suit.DIAMONDS;</span>
+<span class="nc" id="L179">			break;</span>
+			
+		default:
+			break;
+		}
+		
+		// return the suit value
+<span class="nc" id="L186">		return suitValue;</span>
+	}
+	
+	/**
+	 * Getter method for Value based on user input
+	 * 
+	 * @param value Card Value from input
+	 * @return cardValue Value of card
+	 */
+	public Value getValue(String value) {
+		
+<span class="nc" id="L197">		Value cardValue = null;</span>
+		
+<span class="nc bnc" id="L199" title="All 40 branches missed.">		switch (value) {</span>
+		
+		case &quot;2&quot;:
+			
+<span class="nc" id="L203">			cardValue = Value.TWO;</span>
+<span class="nc" id="L204">			break;</span>
+			
+		case &quot;3&quot;:
+<span class="nc" id="L207">			cardValue = Value.THREE;</span>
+<span class="nc" id="L208">			break;</span>
+			
+		case &quot;4&quot;:
+<span class="nc" id="L211">			cardValue = Value.FOUR;</span>
+<span class="nc" id="L212">			break;</span>
+
+		case &quot;5&quot;:
+<span class="nc" id="L215">			cardValue = Value.FIVE;</span>
+<span class="nc" id="L216">			break;</span>
+			
+		case &quot;6&quot;:
+<span class="nc" id="L219">			cardValue = Value.SIX;</span>
+<span class="nc" id="L220">			break;</span>
+			
+		case &quot;7&quot;:
+<span class="nc" id="L223">			cardValue = Value.SEVEN;</span>
+<span class="nc" id="L224">			break;</span>
+			
+		case &quot;8&quot;:
+<span class="nc" id="L227">			cardValue = Value.EIGHT;</span>
+<span class="nc" id="L228">			break;</span>
+			
+		case &quot;9&quot;:
+<span class="nc" id="L231">			cardValue = Value.NINE;</span>
+<span class="nc" id="L232">			break;</span>
+		
+		case &quot;10&quot;:
+<span class="nc" id="L235">			cardValue = Value.TEN;</span>
+<span class="nc" id="L236">			break;</span>
+			
+		case &quot;J&quot;:
+<span class="nc" id="L239">			cardValue = Value.JACK;</span>
+<span class="nc" id="L240">			break;</span>
+			
+		case &quot;Q&quot;:
+<span class="nc" id="L243">			cardValue = Value.QUEEN;</span>
+<span class="nc" id="L244">			break;</span>
+			
+		case &quot;K&quot;:
+<span class="nc" id="L247">			cardValue = Value.KING;</span>
+<span class="nc" id="L248">			break;</span>
+			
+		case &quot;A&quot;:
+<span class="nc" id="L251">			cardValue = Value.ACE;</span>
+<span class="nc" id="L252">			break;</span>
+
+		default:
+			break;
+		}
+		
+		
+<span class="nc" id="L259">		return cardValue;</span>
+		
+	}
+	
+	public static void main(String[] args) {
+		
+		// Scanner to read user Input
+<span class="nc" id="L266">		Scanner scanner = new Scanner(System.in);</span>
+		
+<span class="nc" id="L268">		PokerGameRun gameRun = new PokerGameRun();</span>
+		
+		// Game introduction
+<span class="nc" id="L271">		gameRun.displayIntro();</span>
+		
+		// Player 1 card input from user
+<span class="nc" id="L274">		gameRun.getPlayer1(scanner);</span>
+		
+		// Player 2 card input from user
+<span class="nc" id="L277">		gameRun.getPlayer2(scanner);</span>
+		
+		// close the scanner object
+<span class="nc" id="L280">		scanner.close();</span>
+		
+		// Poker Game starts
+<span class="nc" id="L283">		gameRun.createPlayer1();</span>
+<span class="nc" id="L284">		gameRun.createPlayer2();</span>
+		
+		// Display the winner
+<span class="nc" id="L287">		gameRun.displayWinner();</span>
+		
+<span class="nc" id="L289">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>JunitTestSuite (25 Sep, 2016 5:36:27 PM)</div></body></html>

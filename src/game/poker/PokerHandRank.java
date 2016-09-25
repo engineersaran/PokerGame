@@ -368,6 +368,17 @@ public class PokerHandRank {
 			System.out.println("\t lost by: "+player1.getDisplayHand());
 			System.out.println("\t Score: "+player1.getRank());
 		}
+		else {
+			
+			System.out.println("\t Player1 ties with Player 2");
+			System.out.println("\n\tPlayer1");
+			System.out.println("\t Player1 Card: "+player1.getDisplayHand());
+			System.out.println("\t Score: "+player1.getRank());
+			System.out.println("\n\tPlayer2");
+			System.out.println("\t Player2 Card: "+player2.getDisplayHand());
+			System.out.println("\t Score: "+player2.getRank());
+			
+		}
 		
 		System.out.println("\n*********************************************************\n");
 	}

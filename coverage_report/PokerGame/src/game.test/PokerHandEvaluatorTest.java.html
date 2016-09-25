@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PokerHandEvaluatorTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JunitTestSuite (25 Sep, 2016 5:36:27 PM)</a> &gt; <a href="../../index.html" class="el_group">PokerGame</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">game.test</a> &gt; <span class="el_source">PokerHandEvaluatorTest.java</span></div><h1>PokerHandEvaluatorTest.java</h1><pre class="source lang-java linenums">package game.test;
+
+import game.card.Card;
+import game.card.Suit;
+import game.card.Value;
+import game.poker.PokerHandEvaluator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+<span class="fc" id="L15">public class PokerHandEvaluatorTest {</span>
+	
+	
+	@Test
+	public void testIsFlush_01() {
+		
+<span class="fc" id="L21">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L22">		cardList.add(new Card(Suit.CLUBS, Value.FIVE));</span>
+<span class="fc" id="L23">		cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+<span class="fc" id="L24">		cardList.add(new Card(Suit.CLUBS, Value.KING));</span>
+<span class="fc" id="L25">		cardList.add(new Card(Suit.CLUBS, Value.JACK));</span>
+<span class="fc" id="L26">		cardList.add(new Card(Suit.CLUBS, Value.SEVEN));</span>
+		
+<span class="fc" id="L28">		boolean result = PokerHandEvaluator.isFlush(cardList);</span>
+<span class="fc" id="L29">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L31">	}</span>
+	
+	@Test
+	public void testIsFlush_02() {
+		
+<span class="fc" id="L36">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L37">		cardList.add(new Card(Suit.CLUBS, Value.FIVE));</span>
+<span class="fc" id="L38">		cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+<span class="fc" id="L39">		cardList.add(new Card(Suit.CLUBS, Value.KING));</span>
+<span class="fc" id="L40">		cardList.add(new Card(Suit.CLUBS, Value.JACK));</span>
+<span class="fc" id="L41">		cardList.add(new Card(Suit.SPADES, Value.SEVEN));</span>
+		
+<span class="fc" id="L43">		boolean result = PokerHandEvaluator.isFlush(cardList);</span>
+<span class="fc" id="L44">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L46">	}</span>
+	
+	@Test
+	public void testIsStraight_01() {
+		
+<span class="fc" id="L51">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L52">		cardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+<span class="fc" id="L53">		cardList.add(new Card(Suit.CLUBS, Value.QUEEN));</span>
+<span class="fc" id="L54">		cardList.add(new Card(Suit.DIAMONDS, Value.JACK));</span>
+<span class="fc" id="L55">		cardList.add(new Card(Suit.HEARTS, Value.KING));</span>
+<span class="fc" id="L56">		cardList.add(new Card(Suit.SPADES, Value.TEN));</span>
+		
+<span class="fc" id="L58">		boolean result = PokerHandEvaluator.isStraight(cardList);</span>
+<span class="fc" id="L59">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L61">	}</span>
+	
+	@Test
+	public void testIsStraight_02() {
+		
+<span class="fc" id="L66">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L67">		cardList.add(new Card(Suit.DIAMONDS, Value.FOUR));</span>
+<span class="fc" id="L68">		cardList.add(new Card(Suit.SPADES, Value.TWO));</span>
+<span class="fc" id="L69">		cardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L70">		cardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+<span class="fc" id="L71">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+		
+<span class="fc" id="L73">		boolean result = PokerHandEvaluator.isStraight(cardList);</span>
+<span class="fc" id="L74">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L76">	}</span>
+	
+	@Test
+	public void testIsStraight_03() {
+		
+<span class="fc" id="L81">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L82">		cardList.add(new Card(Suit.SPADES, Value.FOUR));</span>
+<span class="fc" id="L83">		cardList.add(new Card(Suit.HEARTS, Value.TWO));</span>
+<span class="fc" id="L84">		cardList.add(new Card(Suit.DIAMONDS, Value.SIX));</span>
+<span class="fc" id="L85">		cardList.add(new Card(Suit.CLUBS, Value.FIVE));</span>
+<span class="fc" id="L86">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+		
+<span class="fc" id="L88">		boolean result = PokerHandEvaluator.isStraight(cardList);</span>
+<span class="fc" id="L89">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L91">	}</span>
+	
+	@Test
+	public void testIsStraight_04() {
+		
+<span class="fc" id="L96">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L97">		cardList.add(new Card(Suit.CLUBS, Value.FOUR));</span>
+<span class="fc" id="L98">		cardList.add(new Card(Suit.HEARTS, Value.TWO));</span>
+<span class="fc" id="L99">		cardList.add(new Card(Suit.DIAMONDS, Value.SEVEN));</span>
+<span class="fc" id="L100">		cardList.add(new Card(Suit.CLUBS, Value.FIVE));</span>
+<span class="fc" id="L101">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+		
+<span class="fc" id="L103">		boolean result = PokerHandEvaluator.isStraight(cardList);</span>
+<span class="fc" id="L104">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L106">	}</span>
+	
+	@Test
+	public void testIsFullHouse_01() {
+		
+<span class="fc" id="L111">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L112">		cardList.add(new Card(Suit.CLUBS, Value.FOUR));</span>
+<span class="fc" id="L113">		cardList.add(new Card(Suit.SPADES, Value.FOUR));</span>
+<span class="fc" id="L114">		cardList.add(new Card(Suit.HEARTS, Value.FOUR));</span>
+<span class="fc" id="L115">		cardList.add(new Card(Suit.DIAMONDS, Value.THREE));</span>
+<span class="fc" id="L116">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+		
+<span class="fc" id="L118">		boolean result = PokerHandEvaluator.isFullHouse(cardList);</span>
+<span class="fc" id="L119">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L121">	}</span>
+	
+	@Test
+	public void testIsFullHouse_02() {
+		
+<span class="fc" id="L126">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L127">		cardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L128">		cardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+<span class="fc" id="L129">		cardList.add(new Card(Suit.DIAMONDS, Value.JACK));</span>
+<span class="fc" id="L130">		cardList.add(new Card(Suit.CLUBS, Value.JACK));</span>
+<span class="fc" id="L131">		cardList.add(new Card(Suit.SPADES, Value.JACK));</span>
+		
+<span class="fc" id="L133">		boolean result = PokerHandEvaluator.isFullHouse(cardList);</span>
+<span class="fc" id="L134">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L136">	}</span>
+	
+	@Test
+	public void testIsFullHouse_03() {
+		
+<span class="fc" id="L141">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L142">		cardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+<span class="fc" id="L143">		cardList.add(new Card(Suit.CLUBS, Value.QUEEN));</span>
+<span class="fc" id="L144">		cardList.add(new Card(Suit.DIAMONDS, Value.JACK));</span>
+<span class="fc" id="L145">		cardList.add(new Card(Suit.HEARTS, Value.KING));</span>
+<span class="fc" id="L146">		cardList.add(new Card(Suit.SPADES, Value.TEN));</span>
+		
+<span class="fc" id="L148">		boolean result = PokerHandEvaluator.isFullHouse(cardList);</span>
+<span class="fc" id="L149">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L151">	}</span>
+
+	@Test
+	public void testIsFourOfAKind_01() {
+		
+<span class="fc" id="L156">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L157">		cardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L158">		cardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+<span class="fc" id="L159">		cardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+<span class="fc" id="L160">		cardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L161">		cardList.add(new Card(Suit.SPADES, Value.JACK));</span>
+		
+<span class="fc" id="L163">		boolean result = PokerHandEvaluator.isFourOfaKind(cardList);</span>
+<span class="fc" id="L164">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L166">	}</span>
+	
+	@Test
+	public void testIsFourOfAKind_02() {
+		
+<span class="fc" id="L171">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L172">		cardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L173">		cardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+<span class="fc" id="L174">		cardList.add(new Card(Suit.DIAMONDS, Value.KING));</span>
+<span class="fc" id="L175">		cardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L176">		cardList.add(new Card(Suit.SPADES, Value.JACK));</span>
+		
+<span class="fc" id="L178">		boolean result = PokerHandEvaluator.isFourOfaKind(cardList);</span>
+<span class="fc" id="L179">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L181">	}</span>
+	
+	@Test
+	public void testIsThreeOfAKind_01() {
+		
+<span class="fc" id="L186">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L187">		cardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L188">		cardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+<span class="fc" id="L189">		cardList.add(new Card(Suit.DIAMONDS, Value.KING));</span>
+<span class="fc" id="L190">		cardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L191">		cardList.add(new Card(Suit.SPADES, Value.JACK));</span>
+		
+<span class="fc" id="L193">		boolean result = PokerHandEvaluator.isThreeOfaKind(cardList);</span>
+<span class="fc" id="L194">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L196">	}</span>
+	
+	@Test
+	public void testIsThreeOfAKind_02() {
+		
+<span class="fc" id="L201">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L202">		cardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L203">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L204">		cardList.add(new Card(Suit.DIAMONDS, Value.JACK));</span>
+<span class="fc" id="L205">		cardList.add(new Card(Suit.CLUBS, Value.JACK));</span>
+<span class="fc" id="L206">		cardList.add(new Card(Suit.SPADES, Value.JACK));</span>
+		
+<span class="fc" id="L208">		boolean result = PokerHandEvaluator.isThreeOfaKind(cardList);</span>
+<span class="fc" id="L209">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L211">	}</span>
+	
+	@Test
+	public void testIsThreeOfAKind_03() {
+		
+<span class="fc" id="L216">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L217">		cardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L218">		cardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+<span class="fc" id="L219">		cardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+<span class="fc" id="L220">		cardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L221">		cardList.add(new Card(Suit.SPADES, Value.KING));</span>
+		
+<span class="fc" id="L223">		boolean result = PokerHandEvaluator.isThreeOfaKind(cardList);</span>
+<span class="fc" id="L224">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L226">	}</span>
+	
+	@Test
+	public void testIsThreeOfAKind_04() {
+		
+<span class="fc" id="L231">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L232">		cardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L233">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L234">		cardList.add(new Card(Suit.DIAMONDS, Value.JACK));</span>
+<span class="fc" id="L235">		cardList.add(new Card(Suit.CLUBS, Value.JACK));</span>
+<span class="fc" id="L236">		cardList.add(new Card(Suit.SPADES, Value.JACK));</span>
+		
+<span class="fc" id="L238">		boolean result = PokerHandEvaluator.isThreeOfaKind(cardList);</span>
+<span class="fc" id="L239">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L241">	}</span>
+	
+	@Test
+	public void testIsThreeOfAKind_05() {
+		
+<span class="fc" id="L246">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L247">		cardList.add(new Card(Suit.HEARTS, Value.ACE));</span>
+<span class="fc" id="L248">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L249">		cardList.add(new Card(Suit.DIAMONDS, Value.FIVE));</span>
+<span class="fc" id="L250">		cardList.add(new Card(Suit.CLUBS, Value.QUEEN));</span>
+<span class="fc" id="L251">		cardList.add(new Card(Suit.SPADES, Value.JACK));</span>
+		
+<span class="fc" id="L253">		boolean result = PokerHandEvaluator.isThreeOfaKind(cardList);</span>
+<span class="fc" id="L254">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L256">	}</span>
+	
+	@Test
+	public void testIsTwoPairs_01() {
+		
+<span class="fc" id="L261">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L262">		cardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L263">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L264">		cardList.add(new Card(Suit.DIAMONDS, Value.JACK));</span>
+<span class="fc" id="L265">		cardList.add(new Card(Suit.CLUBS, Value.JACK));</span>
+<span class="fc" id="L266">		cardList.add(new Card(Suit.SPADES, Value.JACK));</span>
+		
+<span class="fc" id="L268">		boolean result = PokerHandEvaluator.isTwoPairs(cardList);</span>
+<span class="fc" id="L269">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L271">	}</span>
+	
+	@Test
+	public void testIsTwoPairs_02() {
+	
+<span class="fc" id="L276">	List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L277">	cardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L278">	cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L279">	cardList.add(new Card(Suit.DIAMONDS, Value.THREE));</span>
+<span class="fc" id="L280">	cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+<span class="fc" id="L281">	cardList.add(new Card(Suit.SPADES, Value.JACK));</span>
+	
+<span class="fc" id="L283">	boolean result = PokerHandEvaluator.isTwoPairs(cardList);</span>
+<span class="fc" id="L284">	assertThat(result, is(false));</span>
+<span class="fc" id="L285">	}</span>
+	
+	@Test
+	public void testIsTwoPairs_03() {
+		
+<span class="fc" id="L290">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L291">		cardList.add(new Card(Suit.HEARTS, Value.NINE));</span>
+<span class="fc" id="L292">		cardList.add(new Card(Suit.SPADES, Value.SIX));</span>
+<span class="fc" id="L293">		cardList.add(new Card(Suit.DIAMONDS, Value.EIGHT));</span>
+<span class="fc" id="L294">		cardList.add(new Card(Suit.CLUBS, Value.EIGHT));</span>
+<span class="fc" id="L295">		cardList.add(new Card(Suit.SPADES, Value.EIGHT));</span>
+		
+<span class="fc" id="L297">		boolean result = PokerHandEvaluator.isTwoPairs(cardList);</span>
+<span class="fc" id="L298">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L300">	}</span>
+	
+	@Test
+	public void testIsTwoPairs_04() {
+		
+<span class="fc" id="L305">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L306">		cardList.add(new Card(Suit.HEARTS, Value.NINE));</span>
+<span class="fc" id="L307">		cardList.add(new Card(Suit.SPADES, Value.NINE));</span>
+<span class="fc" id="L308">		cardList.add(new Card(Suit.DIAMONDS, Value.THREE));</span>
+<span class="fc" id="L309">		cardList.add(new Card(Suit.CLUBS, Value.FOUR));</span>
+<span class="fc" id="L310">		cardList.add(new Card(Suit.SPADES, Value.KING));</span>
+		
+<span class="fc" id="L312">		boolean result = PokerHandEvaluator.isTwoPairs(cardList);</span>
+<span class="fc" id="L313">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L315">	}</span>
+	
+	@Test
+	public void testIsTwoPairs_05() {
+		
+<span class="fc" id="L320">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L321">		cardList.add(new Card(Suit.HEARTS, Value.NINE));</span>
+<span class="fc" id="L322">		cardList.add(new Card(Suit.SPADES, Value.NINE));</span>
+<span class="fc" id="L323">		cardList.add(new Card(Suit.DIAMONDS, Value.THREE));</span>
+<span class="fc" id="L324">		cardList.add(new Card(Suit.CLUBS, Value.THREE));</span>
+<span class="fc" id="L325">		cardList.add(new Card(Suit.SPADES, Value.KING));</span>
+		
+<span class="fc" id="L327">		boolean result = PokerHandEvaluator.isTwoPairs(cardList);</span>
+<span class="fc" id="L328">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L330">	}</span>
+	
+	@Test
+	public void testIsTwoPairs_06() {
+		
+<span class="fc" id="L335">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L336">		cardList.add(new Card(Suit.HEARTS, Value.TWO));</span>
+<span class="fc" id="L337">		cardList.add(new Card(Suit.SPADES, Value.EIGHT));</span>
+<span class="fc" id="L338">		cardList.add(new Card(Suit.DIAMONDS, Value.TEN));</span>
+<span class="fc" id="L339">		cardList.add(new Card(Suit.CLUBS, Value.EIGHT));</span>
+<span class="fc" id="L340">		cardList.add(new Card(Suit.SPADES, Value.TEN));</span>
+		
+<span class="fc" id="L342">		boolean result = PokerHandEvaluator.isTwoPairs(cardList);</span>
+<span class="fc" id="L343">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L345">	}</span>
+	
+	@Test
+	public void testIsTwoPairs_07() {
+		
+<span class="fc" id="L350">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L351">		cardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L352">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L353">		cardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+<span class="fc" id="L354">		cardList.add(new Card(Suit.CLUBS, Value.SEVEN));</span>
+<span class="fc" id="L355">		cardList.add(new Card(Suit.SPADES, Value.SEVEN));</span>
+		
+<span class="fc" id="L357">		boolean result = PokerHandEvaluator.isTwoPairs(cardList);</span>
+<span class="fc" id="L358">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L360">	}</span>
+	
+	@Test
+	public void testIsPair_01() {
+		
+<span class="fc" id="L365">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L366">		cardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L367">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L368">		cardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+<span class="fc" id="L369">		cardList.add(new Card(Suit.CLUBS, Value.SEVEN));</span>
+<span class="fc" id="L370">		cardList.add(new Card(Suit.SPADES, Value.SEVEN));</span>
+		
+<span class="fc" id="L372">		boolean result = PokerHandEvaluator.isPair(cardList);</span>
+<span class="fc" id="L373">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L375">	}</span>
+	
+	@Test
+	public void testIsPair_02() {
+		
+<span class="fc" id="L380">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L381">		cardList.add(new Card(Suit.HEARTS, Value.FIVE));</span>
+<span class="fc" id="L382">		cardList.add(new Card(Suit.SPADES, Value.KING));</span>
+<span class="fc" id="L383">		cardList.add(new Card(Suit.DIAMONDS, Value.TEN));</span>
+<span class="fc" id="L384">		cardList.add(new Card(Suit.CLUBS, Value.TEN));</span>
+<span class="fc" id="L385">		cardList.add(new Card(Suit.SPADES, Value.TEN));</span>
+		
+<span class="fc" id="L387">		boolean result = PokerHandEvaluator.isPair(cardList);</span>
+<span class="fc" id="L388">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L390">	}</span>
+	
+	@Test
+	public void testIsPair_03() {
+		
+<span class="fc" id="L395">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L396">		cardList.add(new Card(Suit.HEARTS, Value.NINE));</span>
+<span class="fc" id="L397">		cardList.add(new Card(Suit.SPADES, Value.NINE));</span>
+<span class="fc" id="L398">		cardList.add(new Card(Suit.DIAMONDS, Value.NINE));</span>
+<span class="fc" id="L399">		cardList.add(new Card(Suit.CLUBS, Value.NINE));</span>
+<span class="fc" id="L400">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+		
+<span class="fc" id="L402">		boolean result = PokerHandEvaluator.isPair(cardList);</span>
+<span class="fc" id="L403">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L405">	}</span>
+	
+	@Test
+	public void testIsPair_04() {
+		
+<span class="fc" id="L410">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L411">		cardList.add(new Card(Suit.CLUBS, Value.SIX));</span>
+<span class="fc" id="L412">		cardList.add(new Card(Suit.SPADES, Value.QUEEN));</span>
+<span class="fc" id="L413">		cardList.add(new Card(Suit.HEARTS, Value.QUEEN));</span>
+<span class="fc" id="L414">		cardList.add(new Card(Suit.DIAMONDS, Value.QUEEN));</span>
+<span class="fc" id="L415">		cardList.add(new Card(Suit.SPADES, Value.SIX));</span>
+		
+<span class="fc" id="L417">		boolean result = PokerHandEvaluator.isPair(cardList);</span>
+<span class="fc" id="L418">		assertThat(result, is(false));</span>
+		
+<span class="fc" id="L420">	}</span>
+	
+	@Test
+	public void testIsPair_05() {
+		
+<span class="fc" id="L425">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L426">		cardList.add(new Card(Suit.CLUBS, Value.SIX));</span>
+<span class="fc" id="L427">		cardList.add(new Card(Suit.SPADES, Value.SIX));</span>
+<span class="fc" id="L428">		cardList.add(new Card(Suit.HEARTS, Value.QUEEN));</span>
+<span class="fc" id="L429">		cardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+<span class="fc" id="L430">		cardList.add(new Card(Suit.SPADES, Value.TEN));</span>
+		
+<span class="fc" id="L432">		boolean result = PokerHandEvaluator.isPair(cardList);</span>
+<span class="fc" id="L433">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L435">	}</span>
+	
+	@Test
+	public void testIsPair_06() {
+		
+<span class="fc" id="L440">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L441">		cardList.add(new Card(Suit.CLUBS, Value.ACE));</span>
+<span class="fc" id="L442">		cardList.add(new Card(Suit.SPADES, Value.THREE));</span>
+<span class="fc" id="L443">		cardList.add(new Card(Suit.HEARTS, Value.THREE));</span>
+<span class="fc" id="L444">		cardList.add(new Card(Suit.DIAMONDS, Value.SEVEN));</span>
+<span class="fc" id="L445">		cardList.add(new Card(Suit.SPADES, Value.FOUR));</span>
+		
+<span class="fc" id="L447">		boolean result = PokerHandEvaluator.isPair(cardList);</span>
+<span class="fc" id="L448">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L450">	}</span>
+	
+	@Test
+	public void testIsPair_07() {
+		
+<span class="fc" id="L455">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L456">		cardList.add(new Card(Suit.CLUBS, Value.FIVE));</span>
+<span class="fc" id="L457">		cardList.add(new Card(Suit.SPADES, Value.KING));</span>
+<span class="fc" id="L458">		cardList.add(new Card(Suit.HEARTS, Value.EIGHT));</span>
+<span class="fc" id="L459">		cardList.add(new Card(Suit.DIAMONDS, Value.EIGHT));</span>
+<span class="fc" id="L460">		cardList.add(new Card(Suit.SPADES, Value.NINE));</span>
+		
+<span class="fc" id="L462">		boolean result = PokerHandEvaluator.isPair(cardList);</span>
+<span class="fc" id="L463">		assertThat(result, is(true));</span>
+		
+<span class="fc" id="L465">	}</span>
+	
+	@Test
+	public void testIsPair_08() {
+		
+<span class="fc" id="L470">		List&lt;Card&gt; cardList = new ArrayList&lt;Card&gt;();</span>
+<span class="fc" id="L471">		cardList.add(new Card(Suit.CLUBS, Value.EIGHT));</span>
+<span class="fc" id="L472">		cardList.add(new Card(Suit.SPADES, Value.TWO));</span>
+<span class="fc" id="L473">		cardList.add(new Card(Suit.HEARTS, Value.FOUR));</span>
+<span class="fc" id="L474">		cardList.add(new Card(Suit.DIAMONDS, Value.ACE));</span>
+<span class="fc" id="L475">		cardList.add(new Card(Suit.SPADES, Value.ACE));</span>
+		
+<span class="fc" id="L477">		boolean result = PokerHandEvaluator.isPair(cardList);</span>
+<span class="fc" id="L478">		assertThat(result, is(true));</span>
+<span class="fc" id="L479">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>JunitTestSuite (25 Sep, 2016 5:36:27 PM)</div></body></html>

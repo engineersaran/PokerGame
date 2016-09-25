@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PokerHandRank.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">JunitTestSuite (25 Sep, 2016 5:36:27 PM)</a> &gt; <a href="../../index.html" class="el_group">PokerGame</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">game.poker</a> &gt; <span class="el_source">PokerHandRank.java</span></div><h1>PokerHandRank.java</h1><pre class="source lang-java linenums">package game.poker;
+
+import game.card.Card;
+import game.card.CardComparator;
+import game.player.Player;
+
+import java.util.Collections;
+import java.util.List;
+
+
+/**
+ * Poker Hand Rank Class
+ * Class which actually assigns rank for player's poker cards.
+ * Also decides, which player is winner
+ */
+<span class="nc" id="L16">public class PokerHandRank {</span>
+
+	
+	
+	/**
+	 * Method to get the value of high card
+	 * 
+	 * @param cardList Card list of player
+	 * @return rank return the value of high card
+	 */
+	public static int getHighCardRank(List&lt;Card&gt; cardList) {
+		
+		// rank of high card
+<span class="fc" id="L29">		int rank = 0;</span>
+		
+		// Sorting the card list in ascending order
+<span class="fc" id="L32">		Collections.sort(cardList, new CardComparator());</span>
+		
+<span class="fc" id="L34">		rank = cardList.get(PokerConstants.ZERO).getValue().getSuitValue() </span>
+<span class="fc" id="L35">				+ PokerConstants.FOURTEEN*cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc" id="L36">				+ PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.TWO).getValue().getSuitValue() </span>
+<span class="fc" id="L37">				+ PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.THREE).getValue().getSuitValue()</span>
+<span class="fc" id="L38">				+ PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.FOUR).getValue().getSuitValue();</span>
+		
+		// return value of high card
+<span class="fc" id="L41">		return rank;</span>
+		
+	}
+	
+	/**
+	 * Method to get rank of Straight Flush
+	 * 
+	 * @param cardList Card list of player
+	 * @return rank of STRAIGHT_FLUSH + High Card Rank
+	 */
+	public static int getStraightFlushRank(List&lt;Card&gt; cardList) {
+		
+		// return the Straight Flush rank
+<span class="fc" id="L54">		return PokerConstants.STRAIGHT_FLUSH + getHighCardRank(cardList);</span>
+	}
+	
+	
+	
+	/**
+	 * Method to get Four of a kind rank
+	 * 
+	 * @param cardList Card list of player
+	 * @return rank of Four of a kind + value of the 4 cards
+	 */
+	public static int getFourOfAKindRank(List&lt;Card&gt; cardList) {
+		
+		// Sorting the card list in ascending order
+<span class="fc" id="L68">		Collections.sort(cardList, new CardComparator());</span>
+		
+		// return Four of a kind rank
+<span class="fc" id="L71">		return PokerConstants.FOUR_OF_A_KIND + cardList.get(PokerConstants.TWO).getValue().getSuitValue();</span>
+		
+	}
+	
+	
+	/**
+	 * Method to get Full House rank
+	 * 
+	 * @param cardList Card list of player
+	 * @return rank of Full House + value of the 3 cards
+	 */
+	public static int getFullHouseRank(List&lt;Card&gt; cardList) {
+		
+		// Sorting the card list in ascending order
+<span class="fc" id="L85">		Collections.sort(cardList, new CardComparator());</span>
+		
+		// return Full House rank
+<span class="fc" id="L88">		return PokerConstants.FULL_HOUSE + cardList.get(PokerConstants.TWO).getValue().getSuitValue();</span>
+		
+	} 	
+	
+	/**
+	 * Method to get Flush rank
+	 * 
+	 * @param cardList Card list of player
+	 * @return rank of Flush + High Card Rank
+	 */
+	public static int getFlushRank(List&lt;Card&gt; cardList) {
+		
+		// return Flush rank
+<span class="fc" id="L101">		return PokerConstants.FLUSH + getHighCardRank(cardList);</span>
+		
+	} 	
+	
+	/**
+	 * Method to get Straight rank
+	 * 
+	 * @param cardList Card list of player
+	 * @return rank of Straight + High Card Rank
+	 */
+	public static int getStraightRank(List&lt;Card&gt; cardList) {
+		
+		// return Straight rank
+<span class="fc" id="L114">		return PokerConstants.STRAIGHT + getHighCardRank(cardList);</span>
+		
+	} 
+	
+	/**
+	 * Method to get Three of a Kind rank
+	 * 
+	 * @param cardList Card list of player
+	 * @return rank of Three of a Kind +  value of the 3 cards
+	 */
+	public static int getThreeOfAKindRank(List&lt;Card&gt; cardList) {
+		
+		// Sorting the card list in ascending order
+<span class="fc" id="L127">		Collections.sort(cardList, new CardComparator());</span>
+		
+		// return Three of a kind rank
+<span class="fc" id="L130">		return PokerConstants.THREE_OF_A_KIND + cardList.get(PokerConstants.TWO).getValue().getSuitValue();</span>
+		
+	} 
+	
+	/**
+	 * Method to get Two Pairs rank
+	 * 
+	 * @param cardList Card list of player
+	 * @return rank of TWO Pairs
+	 */
+	public static int getTwoPairsRank(List&lt;Card&gt; cardList) {
+		
+		// rank of 2 pairs
+<span class="fc" id="L143">		int rank = 0;</span>
+		
+		// Sorting the card list in ascending order
+<span class="fc" id="L146">		Collections.sort(cardList, new CardComparator());</span>
+		
+		// if X,X,Y,Y,Z
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if(cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">					&amp;&amp; cardList.get(PokerConstants.TWO).getValue().getSuitValue() == cardList.get(PokerConstants.THREE).getValue().getSuitValue()) {</span>
+			
+<span class="fc" id="L152">			rank = PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.THREE).getValue().getSuitValue()</span>
+<span class="fc" id="L153">					+  PokerConstants.FOURTEEN*cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc" id="L154">					+ cardList.get(PokerConstants.FOUR).getValue().getSuitValue();</span>
+<span class="fc" id="L155">		}</span>
+		// if X,X,Z,Y,Y
+<span class="fc bfc" id="L157" title="All 2 branches covered.">		else if (cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">				&amp;&amp; cardList.get(PokerConstants.THREE).getValue().getSuitValue() == cardList.get(PokerConstants.FOUR).getValue().getSuitValue()) {</span>
+			
+<span class="fc" id="L160">			rank = PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.THREE).getValue().getSuitValue()</span>
+<span class="fc" id="L161">					+  PokerConstants.FOURTEEN*cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc" id="L162">					+ cardList.get(PokerConstants.TWO).getValue().getSuitValue();</span>
+			
+<span class="fc" id="L164">		}</span>
+		// if Z,X,X,Y,Y
+		else {
+			
+<span class="fc" id="L168">			rank = PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.THREE).getValue().getSuitValue()</span>
+<span class="fc" id="L169">					+  PokerConstants.FOURTEEN*cardList.get(PokerConstants.TWO).getValue().getSuitValue()</span>
+<span class="fc" id="L170">					+ cardList.get(PokerConstants.ZERO).getValue().getSuitValue();</span>
+			
+		}
+		
+		// return Two pairs rank
+<span class="fc" id="L175">		return PokerConstants.TWO_PAIRS + rank;</span>
+	} 
+	
+	/**
+	 * Method to get one Pair rank
+	 * 
+	 * @param cardList Card list of player
+	 * @return rank of TWO Pairs
+	 */
+	public static int getPairRank(List&lt;Card&gt; cardList) {
+		
+		// rank of one pair
+<span class="fc" id="L187">		int rank = 0;</span>
+		
+		// Sorting the card list in ascending order
+<span class="fc" id="L190">		Collections.sort(cardList, new CardComparator());</span>
+		
+		// if X,X,A,B,C
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if(cardList.get(PokerConstants.ZERO).getValue().getSuitValue() == cardList.get(PokerConstants.ONE).getValue().getSuitValue()) {</span>
+			
+<span class="fc" id="L195">			rank = PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.ZERO).getValue().getSuitValue()</span>
+<span class="fc" id="L196">					+ cardList.get(PokerConstants.TWO).getValue().getSuitValue() + PokerConstants.FOURTEEN*cardList.get(PokerConstants.THREE).getValue().getSuitValue()</span>
+<span class="fc" id="L197">					+ PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.FOUR).getValue().getSuitValue();</span>
+<span class="fc" id="L198">		}</span>
+		// if A,X,X,B,C
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		else if(cardList.get(PokerConstants.ONE).getValue().getSuitValue() == cardList.get(PokerConstants.TWO).getValue().getSuitValue()) {</span>
+			
+<span class="fc" id="L202">			rank = PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc" id="L203">					+ cardList.get(PokerConstants.ZERO).getValue().getSuitValue() + PokerConstants.FOURTEEN*cardList.get(PokerConstants.THREE).getValue().getSuitValue()</span>
+<span class="fc" id="L204">					+ PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.FOUR).getValue().getSuitValue();</span>
+<span class="fc" id="L205">		}</span>
+		// if A,B,X,X,C
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		else if(cardList.get(PokerConstants.TWO).getValue().getSuitValue() == cardList.get(PokerConstants.THREE).getValue().getSuitValue()) {</span>
+			
+<span class="fc" id="L209">			rank = PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.TWO).getValue().getSuitValue()</span>
+<span class="fc" id="L210">					+ cardList.get(PokerConstants.ZERO).getValue().getSuitValue() + PokerConstants.FOURTEEN*cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc" id="L211">					+ PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.FOUR).getValue().getSuitValue();</span>
+<span class="fc" id="L212">		}</span>
+		// if A,B,C,X,X
+		else {
+			
+<span class="fc" id="L216">			rank = PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.THREE).getValue().getSuitValue()</span>
+<span class="fc" id="L217">					+ cardList.get(PokerConstants.ZERO).getValue().getSuitValue() + PokerConstants.FOURTEEN*cardList.get(PokerConstants.ONE).getValue().getSuitValue()</span>
+<span class="fc" id="L218">					+ PokerConstants.FOURTEEN*PokerConstants.FOURTEEN*cardList.get(PokerConstants.TWO).getValue().getSuitValue();</span>
+		}
+		
+		// return Pair Rank
+<span class="fc" id="L222">		return PokerConstants.PAIR + rank;</span>
+	}
+	
+	
+	/**
+	 * Method to check both player hands strengths and display who is the winner
+	 * 
+	 * @param player1 Player 1
+	 * @param player2 Player 2
+	 */
+	public static void checkPlayerHand(Player player1, Player player2) {
+		
+		
+		// Player 1 hand strength check
+		// is Straight Flush?
+<span class="fc bfc" id="L237" title="All 4 branches covered.">		if(PokerHandEvaluator.isFlush(player1.getCardInHand()) &amp;&amp; PokerHandEvaluator.isStraight(player1.getCardInHand())) {</span>
+			
+<span class="fc" id="L239">			player1.setRank(getStraightFlushRank(player1.getCardInHand()));</span>
+<span class="fc" id="L240">			player1.setDisplayHand(&quot;Straight flush&quot;);</span>
+<span class="fc" id="L241">		}</span>
+		// is Four of a kind?
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		else if(PokerHandEvaluator.isFourOfaKind(player1.getCardInHand())) {</span>
+			
+<span class="fc" id="L245">			player1.setRank(getFourOfAKindRank(player1.getCardInHand()));</span>
+<span class="fc" id="L246">			player1.setDisplayHand(&quot;Four of a kind&quot;);</span>
+<span class="fc" id="L247">		}</span>
+		// is Full House?
+<span class="fc bfc" id="L249" title="All 2 branches covered.">		else if(PokerHandEvaluator.isFullHouse(player1.getCardInHand())) {</span>
+			
+<span class="fc" id="L251">			player1.setRank(getFullHouseRank(player1.getCardInHand()));</span>
+<span class="fc" id="L252">			player1.setDisplayHand(&quot;Full House&quot;);</span>
+<span class="fc" id="L253">		}</span>
+		// is Flush?
+<span class="fc bfc" id="L255" title="All 2 branches covered.">		else if(PokerHandEvaluator.isFlush(player1.getCardInHand())) {</span>
+			
+<span class="fc" id="L257">			player1.setRank(getFlushRank(player1.getCardInHand()));</span>
+<span class="fc" id="L258">			player1.setDisplayHand(&quot;Flush&quot;);</span>
+<span class="fc" id="L259">		}</span>
+		// is Straight?
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		else if(PokerHandEvaluator.isStraight(player1.getCardInHand())) {</span>
+			
+<span class="fc" id="L263">			player1.setRank(getStraightRank(player1.getCardInHand()));</span>
+<span class="fc" id="L264">			player1.setDisplayHand(&quot;Straight&quot;);</span>
+<span class="fc" id="L265">		}</span>
+		// is Three of a Kind?
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		else if(PokerHandEvaluator.isThreeOfaKind(player1.getCardInHand())) {</span>
+			
+<span class="fc" id="L269">			player1.setRank(getThreeOfAKindRank(player1.getCardInHand()));</span>
+<span class="fc" id="L270">			player1.setDisplayHand(&quot;Three of a Kind&quot;);</span>
+<span class="fc" id="L271">		}</span>
+		// is Two Pairs?
+<span class="fc bfc" id="L273" title="All 2 branches covered.">		else if(PokerHandEvaluator.isTwoPairs(player1.getCardInHand())) {</span>
+			
+<span class="fc" id="L275">			player1.setRank(getTwoPairsRank(player1.getCardInHand()));</span>
+<span class="fc" id="L276">			player1.setDisplayHand(&quot;Two Pairs&quot;);</span>
+<span class="fc" id="L277">		}</span>
+		// is Pair?
+<span class="fc bfc" id="L279" title="All 2 branches covered.">		else if(PokerHandEvaluator.isPair(player1.getCardInHand())) {</span>
+			
+<span class="fc" id="L281">			player1.setRank(getPairRank(player1.getCardInHand()));</span>
+<span class="fc" id="L282">			player1.setDisplayHand(&quot;Pair&quot;);</span>
+<span class="fc" id="L283">		}</span>
+		else {
+			
+			// High Card
+<span class="fc" id="L287">			player1.setRank(getHighCardRank(player1.getCardInHand()));</span>
+<span class="fc" id="L288">			player1.setDisplayHand(&quot;High Card&quot;);</span>
+		}
+		
+		// Player 2 hand strength check
+		// is Straight Flush?
+<span class="fc bfc" id="L293" title="All 4 branches covered.">		if(PokerHandEvaluator.isFlush(player2.getCardInHand()) &amp;&amp; PokerHandEvaluator.isStraight(player2.getCardInHand())) {</span>
+			
+<span class="fc" id="L295">			player2.setRank(getStraightFlushRank(player2.getCardInHand()));</span>
+<span class="fc" id="L296">			player2.setDisplayHand(&quot;Straight flush&quot;);</span>
+<span class="fc" id="L297">		}</span>
+		// is Four of a kind?
+<span class="fc bfc" id="L299" title="All 2 branches covered.">		else if(PokerHandEvaluator.isFourOfaKind(player2.getCardInHand())) {</span>
+			
+<span class="fc" id="L301">			player2.setRank(getFourOfAKindRank(player2.getCardInHand()));</span>
+<span class="fc" id="L302">			player2.setDisplayHand(&quot;Four of a kind&quot;);</span>
+<span class="fc" id="L303">		}</span>
+		// is Full House?
+<span class="fc bfc" id="L305" title="All 2 branches covered.">		else if(PokerHandEvaluator.isFullHouse(player2.getCardInHand())) {</span>
+			
+<span class="fc" id="L307">			player2.setRank(getFullHouseRank(player2.getCardInHand()));</span>
+<span class="fc" id="L308">			player2.setDisplayHand(&quot;Full House&quot;);</span>
+			
+<span class="fc" id="L310">		}</span>
+		// is Flush?
+<span class="fc bfc" id="L312" title="All 2 branches covered.">		else if(PokerHandEvaluator.isFlush(player2.getCardInHand())) {</span>
+			
+<span class="fc" id="L314">			player2.setRank(getFlushRank(player2.getCardInHand()));</span>
+<span class="fc" id="L315">			player2.setDisplayHand(&quot;Flush&quot;);</span>
+			
+<span class="fc" id="L317">		}</span>
+		// is Straight?
+<span class="fc bfc" id="L319" title="All 2 branches covered.">		else if(PokerHandEvaluator.isStraight(player2.getCardInHand())) {</span>
+			
+<span class="fc" id="L321">			player2.setRank(getStraightRank(player2.getCardInHand()));</span>
+<span class="fc" id="L322">			player2.setDisplayHand(&quot;Straight&quot;);</span>
+			
+<span class="fc" id="L324">		}</span>
+		// is Three of a Kind?
+<span class="fc bfc" id="L326" title="All 2 branches covered.">		else if(PokerHandEvaluator.isThreeOfaKind(player2.getCardInHand())) {</span>
+			
+<span class="fc" id="L328">			player2.setRank(getThreeOfAKindRank(player2.getCardInHand()));</span>
+<span class="fc" id="L329">			player2.setDisplayHand(&quot;Three of a Kind&quot;);</span>
+<span class="fc" id="L330">		}</span>
+		// is Two Pairs?
+<span class="fc bfc" id="L332" title="All 2 branches covered.">		else if(PokerHandEvaluator.isTwoPairs(player2.getCardInHand())) {</span>
+			
+<span class="fc" id="L334">			player2.setRank(getTwoPairsRank(player2.getCardInHand()));</span>
+<span class="fc" id="L335">			player2.setDisplayHand(&quot;Two Pairs&quot;);</span>
+<span class="fc" id="L336">		}</span>
+		// is Pair?
+<span class="fc bfc" id="L338" title="All 2 branches covered.">		else if(PokerHandEvaluator.isPair(player2.getCardInHand())) {</span>
+			
+<span class="fc" id="L340">			player2.setRank(getPairRank(player2.getCardInHand()));</span>
+<span class="fc" id="L341">			player2.setDisplayHand(&quot;Pair&quot;);</span>
+<span class="fc" id="L342">		}</span>
+		else {
+			
+			// High Card
+<span class="fc" id="L346">			player2.setRank(getHighCardRank(player2.getCardInHand()));</span>
+<span class="fc" id="L347">			player2.setDisplayHand(&quot;High Card&quot;);</span>
+		}
+		
+		
+<span class="fc" id="L351">		System.out.println(&quot;\n*********************************************************\n&quot;);</span>
+		
+<span class="fc bfc" id="L353" title="All 2 branches covered.">		if(player1.getRank() &gt; player2.getRank()) {</span>
+			
+<span class="fc" id="L355">			System.out.println(&quot;\t Player1 wins, Hurray !!!!, Lets Party&quot;);</span>
+<span class="fc" id="L356">			System.out.println(&quot;\t Win by: &quot;+player1.getDisplayHand());</span>
+<span class="fc" id="L357">			System.out.println(&quot;\t Score: &quot;+player1.getRank());</span>
+<span class="fc" id="L358">			System.out.println(&quot;\n\tPlayer2&quot;);</span>
+<span class="fc" id="L359">			System.out.println(&quot;\t lost by: &quot;+player2.getDisplayHand());</span>
+<span class="fc" id="L360">			System.out.println(&quot;\t Score: &quot;+player2.getRank());</span>
+<span class="fc" id="L361">		}</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">		else if(player2.getRank() &gt; player1.getRank()) {</span>
+			
+<span class="fc" id="L364">			System.out.println(&quot;\t Player2 wins, Hurray !!!!, Lets Party&quot;);</span>
+<span class="fc" id="L365">			System.out.println(&quot;\t Win by: &quot;+player2.getDisplayHand());</span>
+<span class="fc" id="L366">			System.out.println(&quot;\t Score: &quot;+player2.getRank());</span>
+<span class="fc" id="L367">			System.out.println(&quot;\n\tPlayer1&quot;);</span>
+<span class="fc" id="L368">			System.out.println(&quot;\t lost by: &quot;+player1.getDisplayHand());</span>
+<span class="fc" id="L369">			System.out.println(&quot;\t Score: &quot;+player1.getRank());</span>
+<span class="fc" id="L370">		}</span>
+		else {
+			
+<span class="fc" id="L373">			System.out.println(&quot;\t Player1 ties with Player 2&quot;);</span>
+<span class="fc" id="L374">			System.out.println(&quot;\n\tPlayer1&quot;);</span>
+<span class="fc" id="L375">			System.out.println(&quot;\t Player1 Card: &quot;+player1.getDisplayHand());</span>
+<span class="fc" id="L376">			System.out.println(&quot;\t Score: &quot;+player1.getRank());</span>
+<span class="fc" id="L377">			System.out.println(&quot;\n\tPlayer2&quot;);</span>
+<span class="fc" id="L378">			System.out.println(&quot;\t Player2 Card: &quot;+player2.getDisplayHand());</span>
+<span class="fc" id="L379">			System.out.println(&quot;\t Score: &quot;+player2.getRank());</span>
+			
+		}
+		
+<span class="fc" id="L383">		System.out.println(&quot;\n*********************************************************\n&quot;);</span>
+<span class="fc" id="L384">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>JunitTestSuite (25 Sep, 2016 5:36:27 PM)</div></body></html>
