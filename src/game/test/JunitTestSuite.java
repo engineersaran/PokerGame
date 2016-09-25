@@ -5,7 +5,9 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ PokerHandEvaluatorTest.class })
+@SuiteClasses({
+	PokerHandEvaluatorTest.class
+})
 public class JunitTestSuite {
 
 }

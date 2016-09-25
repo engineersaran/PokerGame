@@ -14,6 +14,7 @@ import static org.junit.Assert.assertThat;
 
 public class PokerHandEvaluatorTest {
 	
+	
 	@Test
 	public void testIsFlush_01() {
 		
